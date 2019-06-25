@@ -43,7 +43,6 @@
                     <div class="col-xs-8">
                         <textarea class="form-control" name="comment" rows="5" placeholder="Можно написать пару слов..."></textarea>
                     </div>
-                    <span class="error"></span>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
