@@ -85,9 +85,10 @@ class Application extends Config {
                     $error = 'неправильное имя';
                     break;
                 case 'phone':
-                    $regex = '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$';
+                    $regex = '/^[+380]*[(]{1}[1-9]{2}[)]{1}[-0-9]*$/';
                     $error = 'неправильный тел';
                     break;
+                /*
                 case 'email':
                     $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
                     $error = 'неправильный имейл';
@@ -96,7 +97,7 @@ class Application extends Config {
                     $secondExp = $row['value'] != strip_tags($row['value']);
                     $regex = '/p{0,1024}/';
                     $error = 'неправильный коммент';
-                    break;
+                    break;*/
             }
 
             if (!empty($regex)) {
