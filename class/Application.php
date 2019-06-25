@@ -69,10 +69,46 @@ class Application extends Config {
      */
     public function actionFormSubmit($data) {
 
-        $errors = [];                                  //Отсутствие ошибок
+        $errors = [];
+        //Отсутствие ошибок
+
+        foreach ($data as $row) {
+
+            $regex = '';
+            $error = '';
+
+            $secondExp = true;
+
+            switch ($row['name']) {
+                case 'name':
+                    $regex ='/^\D{1,64}$/';
+                    $error = 'неправильное имя';
+                    break;
+                case 'phone':
+                    $regex = '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$';
+                    $error = 'неправильный тел';
+                    break;
+                case 'email':
+                    $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
+                    $error = 'неправильный имейл';
+                    break;
+                case 'comment':
+                    $secondExp = $row['value'] != strip_tags($row['value']);
+                    $regex = '/p{0,1024}/';
+                    $error = 'неправильный коммент';
+                    break;
+            }
+
+            if (!empty($regex)) {
+                if (!preg_match($regex, $row['value']) && $secondExp) {
+                    $errors[$row['name']] = $error;
+                }
+            }
+        }
 
         return ['result' => count($errors) === 0, 'error' => $errors];
     }
+
 
 
     /**
