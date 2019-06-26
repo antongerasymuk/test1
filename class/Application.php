@@ -75,30 +75,61 @@ class Application extends Config {
             $regex = '';
             $error = '';
 
-            $secondExp = true;
+            $secondExp = false;
 
             switch ($row['name']) {
                 case 'name':
-                    $regex ='/^\D{1,64}$/';
-                    $error = 'неправильное имя';
+                    //$regex ='/^\D{1,64}$/';
+                    $secondExp = strpbrk($row['value'], '1234567890') == true;
+
+                    $error = 'имя содержит цифры';
+
+                    if (strlen($row['value']) == 0) {
+                        $secondExp =  true;
+                        $error = 'имя не может быть пустым';
+                    }
+
+                    if (strlen($row['value']) > 64) {
+                        $secondExp =  true;
+                        $error = 'имя слишком длинное';
+                    }
                     break;
                 case 'phone':
                     $regex = '/^[+380]*[(]{1}[1-9]{2}[)]{1}[-0-9]*$/';
                     $error = 'неправильный тел';
+
+                    if (strlen($row['value']) == 0) {
+                        $secondExp =  true;
+                        $error = 'тел не может быть пустым';
+                    }
+
                     break;
                 case 'email':
                     if (empty($row['value'])) continue;
-                    $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
+                    $secondExp = !filter_var($row['value'], FILTER_VALIDATE_EMAIL);
+                    //$regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
                     $error = 'неправильный имейл';
                     break;
                 case 'comment':
-                    $regex = '/^[\s\S]{0,1024}$/';
+                    $secondExp =
+                    (strip_tags($row['value']) !== $row['value'])
+                    || (htmlspecialchars($row['value']) !== $row['value'])
+                    || (mysql_real_escape_string($row['value']) !== $row['value']);
                     $error = 'неправильный коммент';
+
+                    if (strlen($row['value']) > 1024) {
+                        $secondExp =  true;
+                        $error = 'коммент слишком длинный';
+                    }
+
+                    //$regex = '/^[\s\S]{0,1024}$/';
                     break;
             }
 
+            $regex = empty($regex) ? true : preg_match($regex, $row['value']);
+
             if (!empty($regex)) {
-                if (!preg_match($regex, $row['value']) && $secondExp) {
+                if ($regex && $secondExp) {
                     $errors[$row['name']] = $error;
                 }
             }
