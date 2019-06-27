@@ -26,7 +26,7 @@
       <file leaf-file-name="Application.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Application.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="82" column="69" selection-start="2990" selection-end="2990" vertical-scroll-proportion="0.24863884" vertical-offset="1093" max-vertical-offset="2490">
+            <state line="118" column="51" selection-start="4433" selection-end="4457" vertical-scroll-proportion="0.5009074" vertical-offset="1494" max-vertical-offset="2520">
               <folding />
             </state>
           </provider>
@@ -93,6 +93,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="SearchEverywhereHistory" value="" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
   </component>
   <component name="RunManager">
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
@@ -169,7 +170,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Application.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="69" selection-start="2990" selection-end="2990" vertical-scroll-proportion="0.24863884" vertical-offset="1093" max-vertical-offset="2490">
+        <state line="118" column="51" selection-start="4433" selection-end="4457" vertical-scroll-proportion="0.5009074" vertical-offset="1494" max-vertical-offset="2520">
           <folding />
         </state>
       </provider>

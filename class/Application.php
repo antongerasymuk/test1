@@ -102,19 +102,21 @@ class Application extends Config {
                         $secondExp =  true;
                         $error = 'тел не может быть пустым';
                     }
+                   // $errors[$row['name']] = $error;
 
                     break;
                 case 'email':
                     if (empty($row['value'])) continue;
                     $secondExp = !filter_var($row['value'], FILTER_VALIDATE_EMAIL);
+
                     //$regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
                     $error = 'неправильный имейл';
                     break;
                 case 'comment':
                     $secondExp =
                     (strip_tags($row['value']) !== $row['value'])
-                    || (htmlspecialchars($row['value']) !== $row['value'])
-                    || (mysql_real_escape_string($row['value']) !== $row['value']);
+                    || (htmlspecialchars($row['value']) !== $row['value']);
+                    ///|| (mysql_real_escape_string($row['value']) !== $row['value']);
                     $error = 'неправильный коммент';
 
                     if (strlen($row['value']) > 1024) {
@@ -126,7 +128,7 @@ class Application extends Config {
                     break;
             }
 
-            $regex = empty($regex) ? true : preg_match($regex, $row['value']);
+            $regex = empty($regex) ? true : !preg_match($regex, $row['value']);
 
             if (!empty($regex)) {
                 if ($regex && $secondExp) {
