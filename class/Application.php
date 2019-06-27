@@ -80,7 +80,7 @@ class Application extends Config {
             switch ($row['name']) {
                 case 'name':
                     //$regex ='/^\D{1,64}$/';
-                    $secondExp = strpbrk($row['value'], '1234567890') == true;
+                    $secondExp = strpbrk($row['value'], '1234567890');
 
                     $error = 'имя содержит цифры';
 
