@@ -72,17 +72,19 @@ class Application extends Config {
         $errors = [];  //Отсутствие ошибок
 
         foreach ($data as $row) {
-            $regex = '';
-            $error = '';
+            $regex = false;
+            $error = false;
 
             $secondExp = false;
 
             switch ($row['name']) {
                 case 'name':
+                    $regex = '/^([A-Za-zА-Яа-яЁё]+)$/';
+                    $error = 'неправильный формат имени';
                     //$regex ='/^\D{1,64}$/';
-                    $secondExp = strpbrk($row['value'], '1234567890');
+                    //$secondExp = strpbrk($row['value'], '1234567890');
 
-                    $error = 'имя содержит цифры';
+                    //$error = 'имя содержит цифры';
 
                     if (strlen($row['value']) == 0) {
                         $secondExp =  true;
@@ -107,16 +109,18 @@ class Application extends Config {
                     break;
                 case 'email':
                     if (empty($row['value'])) continue;
-                    $secondExp = !filter_var($row['value'], FILTER_VALIDATE_EMAIL);
+                    $secondExp = filter_var($row['value'], FILTER_VALIDATE_EMAIL) == false;
 
                     //$regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
                     $error = 'неправильный имейл';
+                    //$errors[$row['name']] = $secondExp;
                     break;
                 case 'comment':
+                    if (empty($row['value'])) continue;
                     $secondExp =
                     (strip_tags($row['value']) !== $row['value'])
                     || (htmlspecialchars($row['value']) !== $row['value']);
-                    ///|| (mysql_real_escape_string($row['value']) !== $row['value']);
+                    //|| (mysql_real_escape_string($row['value']) !== $row['value']);
                     $error = 'неправильный коммент';
 
                     if (strlen($row['value']) > 1024) {
@@ -128,13 +132,15 @@ class Application extends Config {
                     break;
             }
 
-            $regex = empty($regex) ? true : !preg_match($regex, $row['value']);
+            $regex = empty($regex) ? false : !preg_match($regex, $row['value']);
 
-            if (!empty($regex)) {
-                if ($regex && $secondExp) {
-                    $errors[$row['name']] = $error;
-                }
+
+            if ($regex || $secondExp) {
+                $errors[$row['name']] = $secondExp;
+
+                $errors[$row['name']] = $error;
             }
+
         }
 
         return ['result' => count($errors) === 0, 'error' => $errors];
