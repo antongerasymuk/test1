@@ -95,16 +95,16 @@ class Application extends Config {
                         $secondExp =  true;
                         $error = 'имя слишком длинное';
                     }
+
                     break;
                 case 'phone':
-                    $regex = '/^[+380]*[(]{1}[1-9]{2}[)]{1}[-0-9]*$/';
+                    //$regex = '/^[+380]*[(]{1}[1-9]{2}[)]{1}[-0-9]*$/';
                     $error = 'неправильный тел';
 
                     if (strlen($row['value']) == 0) {
                         $secondExp =  true;
                         $error = 'тел не может быть пустым';
                     }
-                   // $errors[$row['name']] = $error;
 
                     break;
                 case 'email':
@@ -113,7 +113,7 @@ class Application extends Config {
 
                     //$regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
                     $error = 'неправильный имейл';
-                    //$errors[$row['name']] = $secondExp;
+
                     break;
                 case 'comment':
                     if (empty($row['value'])) continue;

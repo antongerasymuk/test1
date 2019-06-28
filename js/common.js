@@ -47,7 +47,6 @@ var Site = {
             }, function(answer) {
                 console.log(answer);
                 $.each(answer.error, function(k, v) {
-                console.log(k);
                     $form.find('[name="' + k + '"]').addClass('has-error').parents('div.field').find('span.error').fadeIn('fast', function() {
                         $(this).html(v);
                     });
