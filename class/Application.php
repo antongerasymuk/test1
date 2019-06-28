@@ -99,7 +99,11 @@ class Application extends Config {
                     break;
                 case 'phone':
                     //$regex = '/^[+380]*[(]{1}[1-9]{2}[)]{1}[-0-9]*$/';
-                    $error = 'неправильный тел';
+
+                    if (strlen(str_replace(['_','-','+', '(', ')'], '',$row['value'])) < 11) {
+                        $secondExp =  true;
+                        $error = 'неправильный тел';
+                    }
 
                     if (strlen($row['value']) == 0) {
                         $secondExp =  true;
